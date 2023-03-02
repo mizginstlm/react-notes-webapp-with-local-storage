@@ -23,10 +23,21 @@ code {
 	background-color: black;
 }
 
-.dark-mode h1 {
+.dark-mode h2{
 	color: white;
 }
 
+.dark-mode h3{
+	color: white;
+}
+
+.dark-mode h1{
+	color: white;
+}
+
+.dark-mode h4{
+	color: white;
+}
 .container {
 	max-width: 960px;
 	margin-right: auto;
@@ -66,17 +77,17 @@ span {
 	
   }
 
-
 .save {
-	background-color: #e1e1e1;
+	background-color: #c39be7;
 	border: none;
 	border-radius: 15px;
 	padding: 5px 10px 5px 10px;
 }
 
 .save:hover {
-	background-color: #ededed;
+	background-color: #8b62b0;
 	cursor: pointer;
+	color: black;
 }
 
 .note {
@@ -88,6 +99,7 @@ span {
 	flex-direction: column;
 	justify-content: space-between;
 	white-space: pre-wrap;
+	
 }
 
 .note-footer {
@@ -111,10 +123,39 @@ span {
 
 .search input {
 	border: none;
-	background-color: rgb(233, 233, 233);
+	outline: none;
+    border-color: darkorchid;
 	width: 100%;
+	background-color: rgb(233, 233, 233);
 }
 
 .search input:focus {
 	outline: none;
+}
+
+
+.dark-mode .search input {
+	background-color:  rgb(233, 233, 233);
+}
+
+.dark-mode .search input:focus {
+	color: black;
+}
+
+.headerButtons{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	white-space: pre-wrap;
+	column-gap: 4px;  /* Set a gap of 20px */
+    
+}
+
+.spanLogout{
+	text-align: right;
+	font-size:0%;
+}
+
+a{
+color: #845486;
 }
