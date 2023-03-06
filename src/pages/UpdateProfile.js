@@ -40,15 +40,10 @@ export default function UpdateProfile() {
       .finally(() => {
         setLoading(false)
       })
-  
           }
     
-          return (
-            
-            
-             
-      <div className={`${darkMode && 'dark-mode'}`}>
-      <Header handleToggleDarkMode={setDarkMode} />
+          return (           
+      <div>
         <div className="signup">
         {error && <span className="spanC">{error}</span>}
           <form className="formC"  onSubmit={handleSubmit}>
@@ -70,7 +65,9 @@ export default function UpdateProfile() {
             />
             <button   className='save' disabled={loading} type="submit">Update Profile</button>
           </form>
-          
+          <h4>
+    Already have an account? <Link to="/login"> Log In</Link>
+    </h4>
         </div>
         
         </div>

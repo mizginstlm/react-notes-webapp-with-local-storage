@@ -1,26 +1,16 @@
 import NotesList from "../components/NotesList";
 import {nanoid} from 'nanoid'
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Search from "../components/Search";
-import Header from "../components/Header";
+import AuthContext from "../contexts/AuthContext";
 
 
-export default function Home(){
+
+export default function Home({children}){
 const [searchText,setSearchText] = useState('');
 const [darkMode, setDarkMode] = useState(false);
-const [notes, setNotes] =useState([
-  {
-    id: nanoid(),
-    text: 'This is my first note!',
-    date: '15/04/2021',
-  },
-  {
-    id: nanoid(),
-    text: 'This is my first note!',
-    date: '15/04/2021',
-  }
-]);
-
+const [notes, setNotes] =useState([]);
+const {currenUser } = useContext(AuthContext)
 useEffect(()=>{
   const savedNotes = JSON.parse(localStorage.getItem('note-data'));
   if (savedNotes) {
@@ -34,6 +24,7 @@ useEffect(()=>{
 
 const addNote = (text) => {
     const date = new Date();
+
     const newNote = {
         id:nanoid(),
         text : text,
@@ -51,10 +42,10 @@ const deleteNote = (id) => {
 
   return(
   
-     <div className={`${darkMode && 'dark-mode'}`}>
+     <div>
       <div className="container">
-    <Header handleToggleDarkMode={setDarkMode} />
       <Search handleSearchNote={setSearchText}/>
+
       <NotesList 
       notes={notes.filter((note)=>note.text.toLowerCase().includes(searchText))}
       handleAddNote ={addNote}

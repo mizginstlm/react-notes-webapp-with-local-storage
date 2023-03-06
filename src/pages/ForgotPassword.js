@@ -1,11 +1,11 @@
 import React, { useRef, useState } from "react"
 import { useAuth } from "../contexts/AuthContext"
-import Header from "../components/Header"
+
 import { Link ,useNavigate} from "react-router-dom"
 
 export default function ForgotPassword() {
         const [error, setError] = useState("")
-        const [darkMode, setDarkMode] = useState(false);
+      
         const emailRef = useRef()
         const { resetPassword} = useAuth()
         const navigate= useNavigate()
@@ -25,8 +25,8 @@ export default function ForgotPassword() {
     
       return (
         <>     
-        <div className={`${darkMode && 'dark-mode'}`}>
-        <Header handleToggleDarkMode={setDarkMode} />
+        <div>
+       
           <div className="signup">
           {error && <span className="spanC">{error}</span>}
     

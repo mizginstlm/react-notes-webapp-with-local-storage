@@ -1,10 +1,14 @@
 import React, { useRef, useState} from "react"
 import { useAuth } from "../contexts/AuthContext"
 import "./signup.css" 
-import Header from "../components/Header"
+import { updateProfile } from "firebase/auth";
+import { doc,setDoc,getFirestore,addDoc, collection, query, where, getDocs } from "firebase/firestore";
+
 import { Link,useNavigate } from "react-router-dom"
+import { db } from "../firebase"
 const  Signup = ()=> {
     const emailRef = useRef()
+    const displayNameRef = useRef()
     const [darkMode, setDarkMode] = useState(false);
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
@@ -12,6 +16,9 @@ const  Signup = ()=> {
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const navigate= useNavigate()
+    const [email,setEmail] = useState();
+    const [password,setPassword] = useState('');
+    const [displayName,setDisplayname] = useState('');
     async function handleSubmit(e) {
         e.preventDefault()
         if (passwordRef.current.value !== passwordConfirmRef.current.value) {
@@ -20,34 +27,49 @@ const  Signup = ()=> {
         try {
           setError("")
           setLoading(true)
-          await  signup(emailRef.current.value, passwordRef.current.value)
+          const res = await  signup(email, password);
+
+          await updateProfile(res.user, {
+            displayName,
+            email,
+            
+          });
+
+          await setDoc(doc(db, "users", res.user.uid), {
+            uid: res.user.uid,
+            displayName,
+            email,
+          });
+
+          await setDoc(doc(db,"usersNotes",res.user.uid ),{})
+       
           navigate("/home");
-        }catch {
-          setError("Failed to create an account")
+        }catch (error){
+          console.log(error)
         }
         setLoading(false)
       }
 
       return (
-        
-        
-         
-  <div className={`${darkMode && 'dark-mode'}`}>
-  <Header handleToggleDarkMode={setDarkMode} />
+  <div>
     <div className="signup">
    
     {error && <span className="spanC">{error}</span>}
       <form className="formC"  onSubmit={handleSubmit}>
       <h2>Sign Up</h2>
 
+      <input className="inputC"
+          type="text"
+          placeholder="display name" onChange={(e) => setDisplayname(e.target.value)} ref={displayNameRef} required 
+        />
         <input className="inputC"
           type="email"
-          placeholder="email" ref={emailRef} required 
+          placeholder="email" onChange={(e) => setEmail(e.target.value)} ref={emailRef} required 
         />
 
         <input className="inputC"
           type="password"
-          placeholder="password" ref={passwordRef} required
+          placeholder="password" onChange={(e) => setPassword(e.target.value)} ref={passwordRef} required
         />
 
         <input className="inputC"
